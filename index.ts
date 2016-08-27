@@ -92,7 +92,7 @@ interface TSCompatibleCompiler {
 
 var instances = <TSInstances>{};
 var webpackInstances = [];
-const scriptRegex = /\.tsx?$|\.vue$/i;
+const scriptRegex = /\.tsx?$/i;
 
 // Take TypeScript errors, parse them and format to webpack errors
 // Optionally adds a file name
