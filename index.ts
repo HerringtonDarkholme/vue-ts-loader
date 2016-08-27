@@ -385,6 +385,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
 
                 try {
                     resolvedFileName = resolver.resolveSync(path.normalize(path.dirname(containingFile)), moduleName)
+                    resolvedFileName = appendSuffixToVue(resolvedFileName)
 
                     if (!resolvedFileName.match(/\.tsx?$/)) resolvedFileName = null;
                     else resolutionResult = { resolvedFileName };
@@ -538,6 +539,7 @@ function loader(contents) {
     this.cacheable && this.cacheable();
     var callback = this.async();
     var filePath = path.normalize(this.resourcePath);
+    filePath = appendSuffixToVue(filePath);
 
     var queryOptions = loaderUtils.parseQuery<LoaderOptions>(this.query);
     var configFileOptions = this.options.ts || {};
