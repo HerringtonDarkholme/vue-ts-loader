@@ -1,0 +1,10 @@
+    Asset     Size  Chunks             Chunk Names
+bundle.js  4.48 kB       0  [emitted]  main
+chunk    {0} bundle.js (main) 2.98 kB [rendered]
+    [0] ./.test/vue/index.vue 1.11 kB {0} [built]
+    [1] .!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/index.vue 422 bytes {0} [built]
+    [2] ./.test/vue/component.vue 1.13 kB {0} [built]
+    [3] .!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/component.vue 167 bytes {0} [built]
+    [4] ./~/vue-html-loader!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/component.vue 45 bytes {0} [built]
+    [5] ./.test/vue/helper.ts 61 bytes {0} [built]
+    [6] ./~/vue-html-loader!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/index.vue 40 bytes {0} [built]
