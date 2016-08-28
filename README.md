@@ -1,9 +1,10 @@
 [![Build Status](https://travis-ci.org/TypeStrong/ts-loader.svg?branch=master)](https://travis-ci.org/TypeStrong/ts-loader)
-[![Build Status](https://ci.appveyor.com/api/projects/status/cdpk4ralr2rfmeky/branch/master?svg=true)](https://ci.appveyor.com/project/jbrantly/ts-loader)
-[![Downloads](http://img.shields.io/npm/dm/ts-loader.svg)](https://npmjs.org/package/ts-loader)
-[![Join the chat at https://gitter.im/TypeStrong/ts-loader](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg)](https://gitter.im/TypeStrong/ts-loader)
+[![Downloads](http://img.shields.io/npm/dm/ts-loader.svg)](https://npmjs.org/package/vue-ts-loader)
 
-# TypeScript loader for webpack
+# TypeScript loader for Vue-loader
+
+Type-check your script in your Vue-loader. Easier importing _.ts_ file in vue's SFC.
+
 
 ## Getting Started
 
@@ -12,7 +13,7 @@ Tutorials and examples can be [found here](https://github.com/TypeStrong/ts-load
 ### Installation
 
 ```
-npm install ts-loader
+npm install vue-ts-loader
 ```
 
 You will also need to install TypeScript if you have not already.
@@ -28,6 +29,8 @@ npm install typescript -g
 npm link typescript
 ```
 
+You also need install vue-loader and friends. Please refer to vue-loader's [documentation](http://vue-loader.vuejs.org/en/index.html).
+
 ### Upgrading
 
 Take advantage of the [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE.md).
@@ -39,10 +42,7 @@ build system using the [Node.js API](http://webpack.github.io/docs/node.js-api.h
 
 ### Compatibility
 
-The current version is compatible with TypeScript 1.6 and above, including the [nightly build](http://blogs.msdn.com/b/typescript/archive/2015/07/27/introducing-typescript-nightlies.aspx).
-You may experience issues using the nightly build due to its nature, but a full test suite runs
-against the latest nightly every day to catch incompatibilites early. Please report any issues
-you experience with the nightly so that they can be fixed promptly.
+The current version is compatible with TypeScript 1.8.
 
 ### Configuration
 
@@ -50,20 +50,26 @@ you experience with the nightly so that they can be fixed promptly.
 
     ```javascript
     module.exports = {
-      entry: './app.ts',
+      entry: './app.vue',
       output: {
         filename: 'bundle.js'
       },
       resolve: {
-        // Add `.ts` and `.tsx` as a resolvable extension.
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+        // Add `.ts` and `.vue` as a resolvable extension.
+        extensions: ['', '.ts', '.vue']
       },
       module: {
         loaders: [
           // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-          { test: /\.tsx?$/, loader: 'ts-loader' }
+          { test: /\.vue$/, loader: 'vue-loader' },
+          { test: /\.tsx?$/, loader: 'vue-ts-loader' }
         ]
-      }
+      },
+      vue: {
+        loaders: {
+          ts: 'vue-ts-loader'
+        }
+      },
     }
     ```
 
@@ -87,7 +93,7 @@ same options. TypeScript files from all subdirectories will get included except 
 
 ### Failing the build on TypeScript compilation error
 
-When the build fails (i.e. at least one typescript compile error occured), ts-loader does **not** propagate the build failure to webpack.  The upshot of this is you can fail to notice an erroring build. This is inconvenient; particularly in continuous integration scenarios.  If you want to ensure that the build failure is propogated it is advised that you make use of the [webpack-fail-plugin](https://www.npmjs.com/package/webpack-fail-plugin).  This plugin that will make the process return status code 1 when it finishes with errors in single-run mode. Et voilà! Build failure.
+When the build fails (i.e. at least one typescript compile error occured), vue-ts-loader does **not** propagate the build failure to webpack.  The upshot of this is you can fail to notice an erroring build. This is inconvenient; particularly in continuous integration scenarios.  If you want to ensure that the build failure is propogated it is advised that you make use of the [webpack-fail-plugin](https://www.npmjs.com/package/webpack-fail-plugin).  This plugin that will make the process return status code 1 when it finishes with errors in single-run mode. Et voilà! Build failure.
 
 For more background have a read of [this issue](https://github.com/TypeStrong/ts-loader/issues/108).
 
@@ -103,7 +109,7 @@ module.exports = {
   module: {
     loaders: [
       // specify option using query
-      { test: /\.tsx?$/, loader: 'ts-loader?compiler=ntypescript' }
+      { test: /\.tsx?$/, loader: 'vue-ts-loader?compiler=ntypescript' }
     ]
   },
   // specify option using `ts` property
@@ -129,7 +135,7 @@ messages are emitted via webpack which is not affected by this flag.
 ##### ignoreDiagnostics *(number[]) (default=[])*
 
 You can squelch certain TypeScript errors by specifying an array of diagnostic
-codes to ignore. 
+codes to ignore.
 
 ##### compiler *(string) (default='typescript')*
 
