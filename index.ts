@@ -141,6 +141,13 @@ function findConfigFile(compiler: typeof typescript, searchPath: string, configF
     return undefined;
 }
 
+function appendSuffixToVue(fileName: string) {
+    if (/\.vue$/.test(fileName)) {
+        return fileName + '.ts';
+    }
+    return fileName;
+}
+
 // The loader is executed once for each file seen by webpack. However, we need to keep
 // a persistent instance of TypeScript that contains all of the files in the program
 // along with definition files and options. This function either creates an instance
@@ -378,6 +385,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
 
                 try {
                     resolvedFileName = resolver.resolveSync(path.normalize(path.dirname(containingFile)), moduleName)
+                    resolvedFileName = appendSuffixToVue(resolvedFileName)
 
                     if (!resolvedFileName.match(/\.tsx?$/)) resolvedFileName = null;
                     else resolutionResult = { resolvedFileName };
@@ -397,9 +405,9 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
 
                 resolvedModules.push(resolutionResult);
             }
-            
+
             instance.dependencyGraph[containingFile] = resolvedModules.filter(m => m != null).map(m => m.resolvedFileName);
-            
+
             return resolvedModules;
         }
     };
@@ -414,7 +422,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
             callback();
             return;
         }
-        
+
         let stats = compilation.stats;
 
         // handle all other errors. The basic approach here to get accurate error
@@ -496,7 +504,9 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
                 let output = languageService.getEmitOutput(filePath);
                 let declarationFile = output.outputFiles.filter(filePath => !!filePath.name.match(/\.d.ts$/)).pop();
                 if (declarationFile) {
-                    compilation.assets[declarationFile.name] = {
+                    let context = compilation.options.context
+                    let assetsPath = path.normalize(path.relative(context, declarationFile.name))
+                    compilation.assets[assetsPath] = {
                         source: () => declarationFile.text,
                         size: () => declarationFile.text.length
                     };
@@ -531,6 +541,7 @@ function loader(contents) {
     this.cacheable && this.cacheable();
     var callback = this.async();
     var filePath = path.normalize(this.resourcePath);
+    filePath = appendSuffixToVue(filePath);
 
     var queryOptions = loaderUtils.parseQuery<LoaderOptions>(this.query);
     var configFileOptions = this.options.ts || {};
@@ -590,7 +601,7 @@ function loader(contents) {
 
         // Emit Javascript
         var output = langService.getEmitOutput(filePath);
-        
+
         // Make this file dependent on *all* definition files in the program
         this.clearDependencies();
         this.addDependency(filePath);
@@ -601,9 +612,9 @@ function loader(contents) {
         // Additionally make this file dependent on all imported files
         let additionalDependencies = instance.dependencyGraph[filePath];
         if (additionalDependencies) {
-            additionalDependencies.forEach(this.addDependency.bind(this))  
+            additionalDependencies.forEach(this.addDependency.bind(this))
         }
-        
+
         this._module.meta.tsLoaderDefinitionFileVersions = allDefinitionFiles
             .concat(additionalDependencies)
             .map(filePath => filePath+'@'+(instance.files[filePath] || {version: '?'}).version);
