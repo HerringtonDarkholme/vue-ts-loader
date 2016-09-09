@@ -374,7 +374,12 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
         getCurrentDirectory: () => process.cwd(),
         getDirectories(path) {
             // compiler sys does not have getDirectories on TS2.0-
-            return compiler.sys['getDirectories'] ? compiler.sys['getDirectories'](path) : []
+			try {
+				return compiler.sys['getDirectories'](path)
+			} catch (e) {
+				// either no directory or low version TS
+				return []
+			}
         },
         getCompilationSettings: () => compilerOptions,
         getDefaultLibFileName: options => compiler.getDefaultLibFilePath(options),

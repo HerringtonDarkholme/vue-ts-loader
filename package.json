@@ -1,6 +1,6 @@
 {
   "name": "vue-ts-loader",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TypeScript loader for vue-loader",
   "main": "index.js",
   "scripts": {
