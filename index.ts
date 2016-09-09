@@ -648,4 +648,5 @@ function loader(contents) {
     callback(null, outputText, sourceMap)
 }
 
+loader['webpackInstances'] = webpackInstances
 export = loader;

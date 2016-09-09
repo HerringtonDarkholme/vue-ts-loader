@@ -28,14 +28,17 @@ var rootPathWithIncorrectWindowsSeparator = rootPath.replace(/\\/g, '/');
 var stagingPath = path.resolve(rootPath, '.test');
 rimraf.sync(stagingPath);
 
+var testLibs = ['testLib', '@types']
+
 // loop through each test directory
 fs.readdirSync(__dirname).forEach(function(test) {
     var testPath = path.join(__dirname, test);
     if (fs.statSync(testPath).isDirectory()) {
 
-        if (test == 'testLib') return;
+        if (testLibs.indexOf(test) >= 0) return;
 
         if (test == 'issue81' && semver.lt(typescript.version, '1.7.0-0')) return;
+        if (test == 'npmTypes' && semver.lt(typescript.version, '2.0.0-0')) return;
 
         describe(test, function() {
             it('should have the correct output', createTest(test, testPath, {}));

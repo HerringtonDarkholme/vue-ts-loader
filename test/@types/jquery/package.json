@@ -1,0 +1,5 @@
+{
+  "description": "TypeScript definitions for chai 3.4.0",
+  "name": "@types/jquery",
+  "typings": "jquery.d.ts"
+}

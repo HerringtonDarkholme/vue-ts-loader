@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "npm link ./test/testLib && mocha --reporter spec test/run.js",
+    "test": "npm link ./test/testLib && npm link ./test/@types/jquery && mocha --reporter spec test/run.js --max-old-space-size=2048",
     "prepublish": "npm run build"
   },
   "repository": {
