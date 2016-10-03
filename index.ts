@@ -73,22 +73,6 @@ interface ResolvedModule {
     isExternalLibraryImport?: boolean;
 }
 
-interface TSCompatibleCompiler {
-    // typescript@next 1.7+
-    readConfigFile(fileName: string, readFile: (path: string) => string): {
-        config?: any;
-        error?: typescript.Diagnostic;
-    };
-    // typescript@latest 1.6.2
-    readConfigFile(fileName: string): {
-        config?: any;
-        error?: typescript.Diagnostic;
-    };
-    // typescript@next 1.8+
-    parseJsonConfigFileContent?(json: any, host: typescript.ParseConfigHost, basePath: string): typescript.ParsedCommandLine;
-    // typescript@latest 1.6.2
-    parseConfigFile?(json: any, host: typescript.ParseConfigHost, basePath: string): typescript.ParsedCommandLine;
-}
 
 var instances = <TSInstances>{};
 var webpackInstances = [];
@@ -221,7 +205,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
 
         // HACK: relies on the fact that passing an extra argument won't break
         // the old API that has a single parameter
-        configFile = (<TSCompatibleCompiler><any>compiler).readConfigFile(
+        configFile = (compiler).readConfigFile(
             configFilePath,
             compiler.sys.readFile
         );
@@ -252,20 +236,12 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
     }
 
     var configParseResult;
-    if (typeof (<any>compiler).parseJsonConfigFileContent === 'function') {
-        // parseConfigFile was renamed between 1.6.2 and 1.7
-        configParseResult = (<TSCompatibleCompiler><any>compiler).parseJsonConfigFileContent(
-            configFile.config,
-            compiler.sys,
-            path.dirname(configFilePath || '')
-        );
-    } else {
-        configParseResult = (<TSCompatibleCompiler><any>compiler).parseConfigFile(
-            configFile.config,
-            compiler.sys,
-            path.dirname(configFilePath || '')
-        );
-    }
+    // parseConfigFile was renamed between 1.6.2 and 1.7
+    configParseResult = (compiler).parseJsonConfigFileContent(
+        configFile.config,
+        compiler.sys,
+        path.dirname(configFilePath || '')
+    );
 
     if (configParseResult.errors.length) {
         pushArray(
