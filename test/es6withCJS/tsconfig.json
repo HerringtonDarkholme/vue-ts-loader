@@ -1,6 +1,7 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs"
-    }
+  "compilerOptions": {
+		"typeRoots": [],
+    "target": "es6",
+    "module": "commonjs"
+  }
 }

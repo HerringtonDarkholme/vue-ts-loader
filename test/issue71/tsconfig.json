@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"noEmitOnError": true
+		"noEmitOnError": true,
+		"typeRoots": []
 	},
 	"files": [
 	]

@@ -1,8 +1,9 @@
 {
 	"compilerOptions": {
-		"target": "es6",
-        "moduleResolution": "node",
-        "jsx": "react"
+	  "target": "es6",
+    "moduleResolution": "node",
+    "jsx": "react",
+		"typeRoots": []
 	},
 	"files": [
 	]

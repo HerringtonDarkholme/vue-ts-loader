@@ -1,5 +1,8 @@
 {
-    "files": [
-        "./references.d.ts"
-    ]
+	"compilerOptions": {
+		"typeRoots": []
+	},
+  "files": [
+    "./references.d.ts"
+  ]
 }

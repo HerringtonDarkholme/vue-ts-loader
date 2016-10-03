@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		
+    "typeRoots": []
 	},
 	"files": [
 	]
