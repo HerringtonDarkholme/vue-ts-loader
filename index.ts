@@ -1,7 +1,4 @@
-///<reference path="typings/node/node.d.ts" />
 ///<reference path="typings/loaderUtils/loaderUtils.d.ts" />
-///<reference path="typings/objectAssign/objectAssign.d.ts" />
-///<reference path="typings/colors/colors.d.ts" />
 ///<reference path="typings/arrify/arrify.d.ts" />
 import typescript = require('typescript');
 import path = require('path');
@@ -196,7 +193,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
     var filesToLoad = [];
     var configFilePath = findConfigFile(compiler, path.dirname(loader.resourcePath), loaderOptions.configFileName);
     var configFile: {
-        config?: any;
+        config?: {compilerOptions: {isolatedModules?: {}}, files: string[]};
         error?: typescript.Diagnostic;
     };
     if (configFilePath) {
@@ -205,7 +202,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
 
         // HACK: relies on the fact that passing an extra argument won't break
         // the old API that has a single parameter
-        configFile = (compiler).readConfigFile(
+        configFile = compiler.readConfigFile(
             configFilePath,
             compiler.sys.readFile
         );
@@ -236,8 +233,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
     }
 
     var configParseResult;
-    // parseConfigFile was renamed between 1.6.2 and 1.7
-    configParseResult = (compiler).parseJsonConfigFileContent(
+    configParseResult = compiler.parseJsonConfigFileContent(
         configFile.config,
         compiler.sys,
         path.dirname(configFilePath || '')
@@ -256,7 +252,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
         }};
     }
 
-    instance.compilerOptions = objectAssign<typescript.CompilerOptions>(compilerOptions, configParseResult.options);
+    instance.compilerOptions = objectAssign(compilerOptions, configParseResult.options);
     filesToLoad = configParseResult.fileNames;
 
     // if `module` is not specified and not using ES6 target, default to CJS module output
@@ -526,7 +522,7 @@ function loader(contents) {
     var queryOptions = loaderUtils.parseQuery<LoaderOptions>(this.query);
     var configFileOptions = this.options.ts || {};
 
-    var options = objectAssign<LoaderOptions>({}, {
+    var options = objectAssign({}, {
         silent: false,
         instance: 'default',
         compiler: 'typescript',
