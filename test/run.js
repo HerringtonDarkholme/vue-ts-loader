@@ -7,20 +7,22 @@ var webpack = require('webpack');
 var webpackVersion = require('webpack/package.json').version;
 var regexEscape = require('escape-string-regexp');
 var typescript = require('typescript');
-var semver = require('semver');
 var glob = require('glob');
+var argv = require('yargs').argv;
+var semver = require('semver');
 
 // force colors on for tests since expected output has colors
 require('colors').enabled = true;
 
-var saveOutputMode = process.argv.indexOf('--save-output') != -1;
+var saveOutputMode = argv['save-output'];
+var testDirs = argv['test'] ? [ argv['test'] ] : fs.readdirSync(__dirname);
 
 var savedOutputs = {};
 
 console.log('Using webpack version ' + webpackVersion);
 console.log('Using typescript version ' + typescript.version);
 
-var typescriptVersion = semver.major(typescript.version) + '.' + semver.minor(typescript.version);
+ var typescriptVersion = semver.major(typescript.version) + '.' + semver.minor(typescript.version);
 
 // set up new empty staging area
 var rootPath = path.resolve(__dirname, '..');
@@ -31,14 +33,11 @@ rimraf.sync(stagingPath);
 var testLibs = ['testLib', '@types']
 
 // loop through each test directory
-fs.readdirSync(__dirname).forEach(function(test) {
+testDirs.forEach(function(test) {
     var testPath = path.join(__dirname, test);
     if (fs.statSync(testPath).isDirectory()) {
 
         if (testLibs.indexOf(test) >= 0) return;
-
-        if (test == 'issue81' && semver.lt(typescript.version, '1.7.0-0')) return;
-        if (test == 'npmTypes' && semver.lt(typescript.version, '2.0.0-0')) return;
 
         describe(test, function() {
             it('should have the correct output', createTest(test, testPath, {}));

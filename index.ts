@@ -170,7 +170,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
     var motd = `ts-loader: Using ${loaderOptions.compiler}@${compiler.version}`,
         compilerCompatible = false;
     if (loaderOptions.compiler == 'typescript') {
-        if (compiler.version && semver.gte(compiler.version, '1.6.2-0')) {
+        if (compiler.version && semver.gte(compiler.version, '2.0.0')) {
             // don't log yet in this case, if a tsconfig.json exists we want to combine the message
             compilerCompatible = true;
         }
@@ -265,10 +265,6 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
     // if `module` is not specified and not using ES6 target, default to CJS module output
     if (compilerOptions.module == null && compilerOptions.target !== 2 /* ES6 */) {
         compilerOptions.module = 1 /* CommonJS */
-    }
-    // special handling for TS 1.6 and target: es6
-    else if (compilerCompatible && semver.lt(compiler.version, '1.7.3-0') && compilerOptions.target == 2 /* ES6 */) {
-        compilerOptions.module = 0 /* None */;
     }
 
     if (loaderOptions.transpileOnly) {
