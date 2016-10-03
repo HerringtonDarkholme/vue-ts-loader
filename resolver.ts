@@ -2,8 +2,6 @@
 // We make our own resolver using a sync file system but using the same plugins & options
 // that webpack does.
 
-///<reference path="typings/node/node.d.ts" />
-
 var Resolver = require("enhanced-resolve/lib/Resolver");
 var SyncNodeJsInputFileSystem = require("enhanced-resolve/lib/SyncNodeJsInputFileSystem");
 var CachedInputFileSystem = require("enhanced-resolve/lib/CachedInputFileSystem");
@@ -36,7 +34,7 @@ function makeResolver(options) {
 	let fileSystem = new CachedInputFileSystem(new SyncNodeJsInputFileSystem(), 60000);
 
     let resolver = new Resolver(fileSystem);
-	
+
 	// apply the same plugins that webpack does, see webpack/lib/WebpackOptionsApply.js
 	resolver.apply(
 		new UnsafeCachePlugin(options.resolve.unsafeCache),
@@ -52,7 +50,7 @@ function makeResolver(options) {
 		new FileAppendPlugin(options.resolve.extensions),
 		new ResultSymlinkPlugin()
 	);
-	
+
 	return resolver;
 }
 

@@ -1,22 +1,29 @@
 ///<reference path="typings/loaderUtils/loaderUtils.d.ts" />
-///<reference path="typings/arrify/arrify.d.ts" />
 import typescript = require('typescript');
 import path = require('path');
 import fs = require('fs');
 import os = require('os');
 import loaderUtils = require('loader-utils');
 import objectAssign = require('object-assign');
-import arrify = require('arrify');
 import makeResolver = require('./resolver');
+import 'colors'
+
 var Console = require('console').Console;
 var semver = require('semver')
-require('colors');
 
 const console = new Console(process.stderr);
 
 var pushArray = function(arr, toPush) {
     Array.prototype.splice.apply(arr, [0, 0].concat(toPush));
 }
+
+function arrify(val: any) {
+	if (val === null || val === undefined) {
+		return [];
+	}
+
+	return Array.isArray(val) ? val : [val];
+};
 
 function hasOwnProperty(obj, property) {
     return Object.prototype.hasOwnProperty.call(obj, property)
@@ -321,7 +328,7 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
     };
 
     // Create the TypeScript language service
-    var servicesHost = {
+    var servicesHost: typescript.LanguageServiceHost = {
         getProjectVersion: () => instance.version+'',
         getScriptFileNames: () => Object.keys(files).filter(filePath => scriptRegex.test(filePath)),
         getScriptVersion: fileName => {
@@ -344,10 +351,8 @@ function ensureTypeScriptInstance(loaderOptions: LoaderOptions, loader: any): { 
             return compiler.ScriptSnapshot.fromString(file.text);
         },
         getCurrentDirectory: () => process.cwd(),
-        getDirectories(path) {
-            // compiler sys does not have getDirectories on TS2.0-
-            return compiler.sys['getDirectories'] ? compiler.sys['getDirectories'](path) : []
-        },
+        getDirectories: typescript.sys.getDirectories,
+        directoryExists: typescript.sys.directoryExists,
         getCompilationSettings: () => compilerOptions,
         getDefaultLibFileName: options => compiler.getDefaultLibFilePath(options),
         getNewLine: () => newLine,

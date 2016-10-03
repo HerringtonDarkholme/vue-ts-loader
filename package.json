@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "npm link ./test/testLib && mocha --reporter spec test/run.js",
+    "baseline-accept": "npm link ./test/testLib && mocha --reporter spec test/run.js --save-output",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -29,7 +30,6 @@
   },
   "homepage": "https://github.com/HerringtonDarkholme/vue-ts-loader",
   "dependencies": {
-    "arrify": "^1.0.0",
     "colors": "^1.0.3",
     "enhanced-resolve": "^0.9.0",
     "loader-utils": "^0.2.6",

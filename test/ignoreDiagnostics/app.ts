@@ -1,9 +1,9 @@
 export class Foo {
-	
+
 }
 
 class Bar {
-	
+
 }
 
 var a: Number = 'b'; // this should error with 2322
