@@ -44,8 +44,7 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	/// <reference path="../../typings/node/node.d.ts" /> 
-
+	
 
 /***/ }
 /******/ ]);
