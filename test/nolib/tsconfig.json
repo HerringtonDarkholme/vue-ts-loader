@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
-        "noLib": true
+        "noLib": true,
+        "typeRoots": []
     },
     "files": []
 }
