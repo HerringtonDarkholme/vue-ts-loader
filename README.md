@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/TypeStrong/ts-loader.svg?branch=master)](https://travis-ci.org/TypeStrong/ts-loader)
-[![Downloads](http://img.shields.io/npm/dm/ts-loader.svg)](https://npmjs.org/package/vue-ts-loader)
+[![Build Status](https://travis-ci.org/herringtondarkholme/vue-ts-loader.svg?branch=master)](https://travis-ci.org/herringtondarkholme/vue-ts-loader)
 
 # TypeScript loader for Vue-loader
 
@@ -8,7 +7,7 @@ Type-check your script in your Vue-loader. Easier importing _.ts_ file in vue's 
 
 ## Getting Started
 
-Tutorials and examples can be [found here](https://github.com/TypeStrong/ts-loader/wiki/Tutorials-&-Examples).
+Tutorials and examples can be [found here](http://herringtondarkholme.github.io/2016/10/03/vue2-ts2/).
 
 ### Installation
 
@@ -31,10 +30,6 @@ npm link typescript
 
 You also need install vue-loader and friends. Please refer to vue-loader's [documentation](http://vue-loader.vuejs.org/en/index.html).
 
-### Upgrading
-
-Take advantage of the [Changelog](CHANGELOG.md) and [Upgrade Guide](UPGRADE.md).
-
 ### Running
 
 Use webpack like normal, including `webpack --watch` and `webpack-dev-server`, or through another
@@ -42,7 +37,7 @@ build system using the [Node.js API](http://webpack.github.io/docs/node.js-api.h
 
 ### Compatibility
 
-The current version is compatible with TypeScript 1.8.
+The current version is compatible with TypeScript 2.0.
 
 ### Configuration
 
@@ -68,7 +63,9 @@ The current version is compatible with TypeScript 1.8.
       vue: {
         loaders: {
           ts: 'vue-ts-loader'
-        }
+        },
+        // important for cooperating with vue-loader
+        esModule: true
       },
     }
     ```
