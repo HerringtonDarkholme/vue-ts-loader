@@ -22,7 +22,7 @@ var savedOutputs = {};
 console.log('Using webpack version ' + webpackVersion);
 console.log('Using typescript version ' + typescript.version);
 
- var typescriptVersion = semver.major(typescript.version) + '.' + semver.minor(typescript.version);
+var typescriptVersion = semver.major(typescript.version) + '.' + semver.minor(typescript.version);
 
 // set up new empty staging area
 var rootPath = path.resolve(__dirname, '..');
@@ -201,47 +201,45 @@ function createTest(test, testPath, options) {
                 }
             }
 
-            if (!saveOutputMode) {
-                // massage any .transpiled. files
-                glob.sync('**/*', {cwd: expectedOutput, nodir: true}).forEach(function(file) {
-                    if (/\.transpiled/.test(file)) {
-                        if (options.transpile) { // rename if we're in transpile mode
-                            var extension = path.extname(file);
-                            fs.renameSync(
-                                path.join(expectedOutput, file),
-                                path.join(expectedOutput, path.dirname(file), path.basename(file, '.transpiled'+extension)+extension)
-                            );
-                        }
-                        else { // otherwise delete
-                            fs.unlinkSync(path.join(expectedOutput, file));
-                        }
-
+            // massage any .transpiled. files
+            glob.sync('**/*', {cwd: expectedOutput, nodir: true}).forEach(function(file) {
+                if (/\.transpiled/.test(file)) {
+                    if (options.transpile) { // rename if we're in transpile mode
+                        var extension = path.extname(file);
+                        fs.renameSync(
+                            path.join(expectedOutput, file),
+                            path.join(expectedOutput, path.dirname(file), path.basename(file, '.transpiled'+extension)+extension)
+                        );
                     }
-                });
-
-                // compare actual to expected
-                var actualFiles = glob.sync('**/*', {cwd: actualOutput, nodir: true}),
-                    expectedFiles = glob.sync('**/*', {cwd: expectedOutput, nodir: true})
-                        .filter(function(file) { return !/^patch/.test(file); }),
-                    allFiles = {};
-
-                actualFiles.map(function(file) { allFiles[file] = true });
-                expectedFiles.map(function(file) { allFiles[file] = true });
-
-                Object.keys(allFiles).forEach(function(file) {
-                    try {
-                        var actual = fs.readFileSync(path.join(actualOutput, file)).toString().replace(/\r\n/g, '\n');
+                    else { // otherwise delete
+                        fs.unlinkSync(path.join(expectedOutput, file));
                     }
-                    catch (e) { actual = '!!!actual file doesnt exist!!!' }
 
-                    try {
-                        var expected = fs.readFileSync(path.join(expectedOutput, file)).toString().replace(/\r\n/g, '\n');
-                    }
-                    catch (e) { expected = '!!!expected file doesnt exist!!!' }
+                }
+            });
 
-                    assert.equal(actual.toString(), expected.toString(), (patch?patch+'/':patch) + file + ' is different between actual and expected');
-                });
-            }
+            // compare actual to expected
+            var actualFiles = glob.sync('**/*', {cwd: actualOutput, nodir: true}),
+                expectedFiles = glob.sync('**/*', {cwd: expectedOutput, nodir: true})
+                    .filter(function(file) { return !/^patch/.test(file); }),
+                allFiles = {};
+
+            actualFiles.map(function(file) { allFiles[file] = true });
+            expectedFiles.map(function(file) { allFiles[file] = true });
+
+            Object.keys(allFiles).forEach(function(file) {
+                try {
+                    var actual = fs.readFileSync(path.join(actualOutput, file)).toString().replace(/\r\n/g, '\n');
+                }
+                catch (e) { actual = '!!!actual file doesnt exist!!!' }
+
+                try {
+                    var expected = fs.readFileSync(path.join(expectedOutput, file)).toString().replace(/\r\n/g, '\n');
+                }
+                catch (e) { expected = '!!!expected file doesnt exist!!!' }
+
+                assert.equal(actual.toString(), expected.toString(), (patch?patch+'/':patch) + file + ' is different between actual and expected');
+            });
 
             // check for new files to copy in
             var patchPath = path.join(testStagingPath, 'patch'+iteration);
