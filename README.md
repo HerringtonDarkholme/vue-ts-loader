@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.org/herringtondarkholme/vue-ts-loader.svg?branch=master)](https://travis-ci.org/herringtondarkholme/vue-ts-loader)
 
-# TypeScript loader for Vue-loader
+# TypeScript loader for Vue-loader [![Build Status](https://travis-ci.org/HerringtonDarkholme/vue-ts-loader.svg?branch=master)](https://travis-ci.org/HerringtonDarkholme/vue-ts-loader)
 
 Type-check your script in your Vue-loader. Easier importing _.ts_ file in vue's SFC.
 
@@ -19,13 +18,6 @@ You will also need to install TypeScript if you have not already.
 
 ```
 npm install typescript
-```
-
-or if you want to install TypeScript globally
-
-```
-npm install typescript -g
-npm link typescript
 ```
 
 You also need install vue-loader and friends. Please refer to vue-loader's [documentation](http://vue-loader.vuejs.org/en/index.html).
