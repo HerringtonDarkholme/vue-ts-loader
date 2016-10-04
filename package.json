@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "npm link ./test/testLib && npm link ./test/@types/jquery && mocha --reporter spec test/run.js --max-old-space-size=4096",
-    "baseline-accept": "npm link ./test/testLib && mocha --reporter spec test/run.js --save-output",
+    "baseline-accept": "npm link ./test/testLib && npm link ./test/@types/jquery && mocha --reporter spec test/run.js --max-old-space-size=4096 --save-output",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -48,7 +48,7 @@
     "escape-string-regexp": "^1.0.3",
     "fs-extra": "^0.22.1",
     "glob": "^6.0.3",
-    "html-webpack-plugin": "^2.17.0",
+    "html-webpack-plugin": "^2.22.0",
     "mkdirp": "^0.5.1",
     "mocha": "^2.1.0",
     "rimraf": "^2.4.2",
