@@ -3,6 +3,7 @@
 
 Type-check your script in your Vue-loader. Easier importing _.ts_ file in vue's SFC.
 
+![screenshot](https://raw.githubusercontent.com/HerringtonDarkholme/vue-ts-example/master/screen.png)
 
 ## Getting Started
 
