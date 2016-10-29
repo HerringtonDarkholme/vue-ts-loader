@@ -1,5 +1,5 @@
 module.exports = {
-    entry: { 
+    entry: {
         a: './a.ts',
         b: './b.ts'
     },
@@ -12,8 +12,8 @@ module.exports = {
     module: {
         loaders: [
             // this will fail if both files are passed through the same instance
-            { test: /a\.ts$/, loader: '../../index.js' },
-            { test: /b\.ts$/, loader: '../../index.js?instance=different' }
+            { test: /a\.ts$/, loader: '../../dist/index.js' },
+            { test: /b\.ts$/, loader: '../../dist/index.js?instance=different' }
         ]
     }
 }
