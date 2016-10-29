@@ -60,14 +60,14 @@ function createTest(test, testPath, options) {
             actualOutput = path.join(testStagingPath, 'actualOutput'),
             expectedOutput = path.join(testStagingPath, 'expectedOutput-'+typescriptVersion),
             webpackOutput = path.join(testStagingPath, '.output'),
-            originalExpectedOutput = path.join(testPath, 'expectedOutput-'+typescriptVersion);
+            baselineOutput = path.join(testPath, 'expectedOutput-'+typescriptVersion);
 
         if (saveOutputMode) {
             savedOutputs[test] = savedOutputs[test] || {};
             var regularSavedOutput = savedOutputs[test].regular = savedOutputs[test].regular || {};
             var transpiledSavedOutput = savedOutputs[test].transpiled = savedOutputs[test].transpiled || {};
             var currentSavedOutput = options.transpile ? transpiledSavedOutput : regularSavedOutput;
-            mkdirp.sync(originalExpectedOutput);
+            mkdirp.sync(baselineOutput);
         }
 
         // copy all input to a staging area
@@ -82,6 +82,7 @@ function createTest(test, testPath, options) {
         // execute webpack
         var config = require(path.join(testStagingPath, 'webpack.config'));
         config.output.path = webpackOutput;
+        config.resolveLoader = { alias: { 'ts-loader': require('path').join(__dirname, "../dist/index.js") } }
         config.context = testStagingPath;
         config.resolveLoader = config.resolveLoader || {};
         config.resolveLoader.alias = config.resolveLoader.alias || {};
@@ -103,10 +104,10 @@ function createTest(test, testPath, options) {
                 patch = 'patch'+(iteration-1);
                 actualOutput = path.join(testStagingPath, 'actualOutput', patch);
                 expectedOutput = path.join(testStagingPath, 'expectedOutput-'+typescriptVersion, patch);
-                originalExpectedOutput = path.join(testPath, 'expectedOutput-'+typescriptVersion, patch)
+                baselineOutput = path.join(testPath, 'expectedOutput-'+typescriptVersion, patch)
                 mkdirp.sync(actualOutput);
                 mkdirp.sync(expectedOutput);
-                if (saveOutputMode) mkdirp.sync(originalExpectedOutput);
+                if (saveOutputMode) mkdirp.sync(baselineOutput);
             }
 
             // replace the hash if found in the output since it can change depending
@@ -137,7 +138,7 @@ function createTest(test, testPath, options) {
                     }
                 });
 
-                fs.copySync(webpackOutput, originalExpectedOutput, { clobber: true });
+                fs.copySync(webpackOutput, baselineOutput, { clobber: true });
             }
             fs.copySync(webpackOutput, actualOutput);
             rimraf.sync(webpackOutput);
@@ -158,11 +159,11 @@ function createTest(test, testPath, options) {
 
                     if (options.transpile) {
                         if (regularSavedOutput[patchedErrFileName] !== transpiledSavedOutput[patchedErrFileName]) {
-                            fs.writeFileSync(path.join(originalExpectedOutput, 'err.transpiled.txt'), errString);
+                            fs.writeFileSync(path.join(baselineOutput, 'err.transpiled.txt'), errString);
                         }
                     }
                     else {
-                        fs.writeFileSync(path.join(originalExpectedOutput, errFileName), errString);
+                        fs.writeFileSync(path.join(baselineOutput, errFileName), errString);
                     }
                 }
             }
@@ -193,11 +194,11 @@ function createTest(test, testPath, options) {
 
                     if (options.transpile) {
                         if (regularSavedOutput[patchedStatsFileName] !== transpiledSavedOutput[patchedStatsFileName]) {
-                            fs.writeFileSync(path.join(originalExpectedOutput, 'output.transpiled.txt'), statsString);
+                            fs.writeFileSync(path.join(baselineOutput, 'output.transpiled.txt'), statsString);
                         }
                     }
                     else {
-                        fs.writeFileSync(path.join(originalExpectedOutput, statsFileName), statsString);
+                        fs.writeFileSync(path.join(baselineOutput, statsFileName), statsString);
                     }
                 }
             }
