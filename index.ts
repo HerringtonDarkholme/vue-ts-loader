@@ -8,74 +8,21 @@ import objectAssign = require('object-assign');
 import makeResolver = require('./resolver');
 import 'colors'
 
+import {hasOwnProperty, pushArray, arrify} from './src/util'
+import {
+  TSInstances,
+  TSInstance,
+  WebpackError,
+  LoaderOptions,
+  TSFiles,
+  ResolvedModule,
+  TSFile
+} from './src/interfaces'
+
 var Console = require('console').Console;
 var semver = require('semver')
 
 const console = new Console(process.stderr);
-
-var pushArray = function(arr, toPush) {
-    Array.prototype.splice.apply(arr, [0, 0].concat(toPush));
-}
-
-function arrify(val: any) {
-	if (val === null || val === undefined) {
-		return [];
-	}
-
-	return Array.isArray(val) ? val : [val];
-};
-
-function hasOwnProperty(obj, property) {
-    return Object.prototype.hasOwnProperty.call(obj, property)
-}
-
-interface LoaderOptions {
-    silent: boolean;
-    instance: string;
-    compiler: string;
-    configFileName: string;
-    transpileOnly: boolean;
-    ignoreDiagnostics: number[];
-    compilerOptions: typescript.CompilerOptions;
-}
-
-interface TSFile {
-    text: string;
-    version: number;
-}
-
-interface TSFiles {
-    [fileName: string]: TSFile;
-}
-
-interface TSInstance {
-    compiler: typeof typescript;
-    compilerOptions: typescript.CompilerOptions;
-    loaderOptions: LoaderOptions;
-    files: TSFiles;
-    languageService?: typescript.LanguageService;
-    version?: number;
-    dependencyGraph: any;
-}
-
-interface TSInstances {
-    [name: string]: TSInstance;
-}
-
-interface WebpackError {
-    module?: any;
-    file?: string;
-    message: string;
-    rawMessage: string;
-    location?: {line: number, character: number};
-    loaderSource: string;
-}
-
-interface ResolvedModule {
-    resolvedFileName?: string;
-    resolvedModule?: ResolvedModule;
-    isExternalLibraryImport?: boolean;
-}
 
 
 var instances = <TSInstances>{};
@@ -619,6 +566,15 @@ function loader(contents) {
     this._module.meta.tsLoaderFileVersion = file.version;
 
     callback(null, outputText, sourceMap)
+}
+
+function cleanup() {
+  instances = {}
+  webpackInstances = []
+}
+
+namespace loader {
+  export var _cleanup = cleanup
 }
 
 export = loader;

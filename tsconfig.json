@@ -1,9 +1,16 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "moduleResolution": "node"
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": false,
+        "outDir": "dist"
     },
     "files": [
-        "index.ts"
+      "index.ts",
+      "src/interfaces.ts"
+    ],
+    "exclude": [
+      "node_modules", "dist"
     ]
 }

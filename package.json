@@ -1,8 +1,11 @@
 {
   "name": "vue-ts-loader",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "TypeScript loader for vue-loader",
   "main": "index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "npm link ./test/testLib && npm link ./test/@types/jquery && mocha --reporter spec test/run.js --max-old-space-size=4096",

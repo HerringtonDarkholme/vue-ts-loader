@@ -10,6 +10,7 @@ var typescript = require('typescript');
 var glob = require('glob');
 var argv = require('yargs').argv;
 var semver = require('semver');
+var loader = require('../dist/index')
 
 // force colors on for tests since expected output has colors
 require('colors').enabled = true;
@@ -253,6 +254,8 @@ function createTest(test, testPath, options) {
             }
             else {
                 watcher.close(function() {
+                    // clean instances
+                    loader._cleanup()
                     done();
                 });
             }
