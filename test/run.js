@@ -66,6 +66,7 @@ function loadConfig(testStagingPath, webpackOutput) {
     return config
 }
 
+var savedOutputs = {}
 function createTest(test, testPath, options) {
 
     // set up paths
@@ -86,8 +87,8 @@ function createTest(test, testPath, options) {
     return function(done) {
         this.timeout(60000); // sometimes it just takes awhile
 
-        var savedOutput = {}
         if (saveOutputMode) {
+            var savedOutput = savedOutputs[test] = savedOutputs[test] || {};
             var regularSavedOutput = savedOutput.regular = savedOutput.regular || {};
             var transpiledSavedOutput = savedOutput.transpiled = savedOutput.transpiled || {};
             var currentSavedOutput = options.transpile ? transpiledSavedOutput : regularSavedOutput;
