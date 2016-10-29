@@ -56,29 +56,14 @@
 	  typeof __vue_exports__.default === "object" ||
 	  typeof __vue_exports__.default === "function"
 	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
 	__vue_options__ = __vue_exports__ = __vue_exports__.default
 	}
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "/home/face/Desktop/code/test/ts-loader/.test/vue.transpile/index.vue"
+
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-39ef11c7", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-39ef11c7", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] index.vue: functional components are not supported and should be defined in plain js files using render functions.")}
 
 	module.exports = __vue_exports__
 
@@ -121,29 +106,14 @@
 	  typeof __vue_exports__.default === "object" ||
 	  typeof __vue_exports__.default === "function"
 	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
 	__vue_options__ = __vue_exports__ = __vue_exports__.default
 	}
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "/home/face/Desktop/code/test/ts-loader/.test/vue.transpile/component.vue"
+
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-045601f2", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-045601f2", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] component.vue: functional components are not supported and should be defined in plain js files using render functions.")}
 
 	module.exports = __vue_exports__
 
@@ -166,17 +136,11 @@
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports={render:function (){with(this) {
 	  return _h('p', ["Hello from " + _s(msg)])
 	}},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-045601f2", module.exports)
-	  }
-	}
 
 /***/ },
 /* 5 */
@@ -189,17 +153,11 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports={render:function (){with(this) {
 	  return _h('p', ["hallo " + _s(msg)])
 	}},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-39ef11c7", module.exports)
-	  }
-	}
 
 /***/ }
 /******/ ]);

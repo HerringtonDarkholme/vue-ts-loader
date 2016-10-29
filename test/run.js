@@ -18,8 +18,6 @@ require('colors').enabled = true;
 var saveOutputMode = argv['save-output'];
 var testDirs = argv['test'] ? [ argv['test'] ] : fs.readdirSync(__dirname);
 
-var savedOutputs = {};
-
 console.log('Using webpack version ' + webpackVersion);
 console.log('Using typescript version ' + typescript.version);
 
@@ -88,10 +86,10 @@ function createTest(test, testPath, options) {
     return function(done) {
         this.timeout(60000); // sometimes it just takes awhile
 
+        var savedOutput = {}
         if (saveOutputMode) {
-            savedOutputs[test] = savedOutputs[test] || {};
-            var regularSavedOutput = savedOutputs[test].regular = savedOutputs[test].regular || {};
-            var transpiledSavedOutput = savedOutputs[test].transpiled = savedOutputs[test].transpiled || {};
+            var regularSavedOutput = savedOutput.regular = savedOutput.regular || {};
+            var transpiledSavedOutput = savedOutput.transpiled = savedOutput.transpiled || {};
             var currentSavedOutput = options.transpile ? transpiledSavedOutput : regularSavedOutput;
             mkdirp.sync(baselineOutput);
         }
@@ -113,7 +111,7 @@ function createTest(test, testPath, options) {
             });
         }
 
-        function renameTranspile(patch) {
+        function saveOutputToBaseline(patch) {
             // loop through webpackOutput and rename to .transpiled if needed
             glob.sync('**/*', {cwd: webpackOutput, nodir: true}).forEach(function(file) {
                 var patchedFileName = patch+'/'+file;
@@ -216,7 +214,7 @@ function createTest(test, testPath, options) {
 
             // output results
             if (saveOutputMode) {
-              renameTranspile(patch)
+              saveOutputToBaseline(patch)
             }
             fs.copySync(webpackOutput, actualOutput);
             rimraf.sync(webpackOutput);
