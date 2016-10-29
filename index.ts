@@ -569,6 +569,12 @@ function loader(contents) {
 }
 
 function cleanup() {
+  for (let key in instances) {
+    let instance = instances[key]
+    instance.dependencyGraph = null
+    instance.compiler = null
+    instance.files = null
+  }
   instances = {}
   webpackInstances = []
 }
