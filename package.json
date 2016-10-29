@@ -43,7 +43,7 @@
     "@types/colors": "^0.6.33",
     "@types/node": "^6.0.41",
     "@types/object-assign": "^4.0.29",
-    "babel-core": "^6.17.0",
+    "babel-core": "6.17.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
