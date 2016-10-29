@@ -52,15 +52,16 @@ testDirs.forEach(function(test) {
 });
 
 function createTest(test, testPath, options) {
+
+    // set up paths
+    var testStagingPath = path.join(stagingPath, test+(options.transpile ? '.transpile' : '')),
+        actualOutput = path.join(testStagingPath, 'actualOutput'),
+        expectedOutput = path.join(testStagingPath, 'expectedOutput-'+typescriptVersion),
+        webpackOutput = path.join(testStagingPath, '.output'),
+        baselineOutput = path.join(testPath, 'expectedOutput-'+typescriptVersion);
+
     return function(done) {
         this.timeout(60000); // sometimes it just takes awhile
-
-        // set up paths
-        var testStagingPath = path.join(stagingPath, test+(options.transpile ? '.transpile' : '')),
-            actualOutput = path.join(testStagingPath, 'actualOutput'),
-            expectedOutput = path.join(testStagingPath, 'expectedOutput-'+typescriptVersion),
-            webpackOutput = path.join(testStagingPath, '.output'),
-            baselineOutput = path.join(testPath, 'expectedOutput-'+typescriptVersion);
 
         if (saveOutputMode) {
             savedOutputs[test] = savedOutputs[test] || {};
