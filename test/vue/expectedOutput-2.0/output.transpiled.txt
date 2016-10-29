@@ -2,9 +2,9 @@
 bundle.js  5.62 kB       0  [emitted]  main
 chunk    {0} bundle.js (main) 4.02 kB [rendered]
     [0] ./.test/vue/index.vue 1.46 kB {0} [built]
-    [1] .!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/index.vue 355 bytes {0} [built]
+    [1] ./dist!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/index.vue 355 bytes {0} [built]
     [2] ./.test/vue/component.vue 1.47 kB {0} [built]
-    [3] .!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/component.vue 157 bytes {0} [built]
+    [3] ./dist!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/component.vue 157 bytes {0} [built]
     [4] ./~/vue-loader/lib/template-compiler.js?id=data-v-4!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/component.vue 258 bytes {0} [built]
     [5] ./.test/vue/helper.ts 61 bytes {0} [built]
     [6] ./~/vue-loader/lib/template-compiler.js?id=data-v-3!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/index.vue 253 bytes {0} [built]

@@ -3,7 +3,7 @@ ERROR in ./.test/errors/app.ts
 [37m([39m[36m1[39m,[36m7[39m): [31merror TS1005: '=' expected.[39m
 
 ERROR in ./.test/errors/app.ts
-Module parse failed: index.js!app.ts Unexpected token (2:9)
+Module parse failed: dist/index.js!app.ts Unexpected token (2:9)
 You may need an appropriate loader to handle this file type.
 SyntaxError: Unexpected token (2:9)
     at Parser.pp$4.raise (node_modules/acorn/dist/acorn.js:2221:15)
@@ -26,11 +26,11 @@ SyntaxError: Unexpected token (2:9)
     at nextLoader (node_modules/webpack-core/lib/NormalModuleMixin.js:275:25)
     at node_modules/webpack-core/lib/NormalModuleMixin.js:292:15
     at context.callback (node_modules/webpack-core/lib/NormalModuleMixin.js:148:14)
-    at Object.loader (index.js:480:5)
+    at Object.loader (dist/index.js:468:5)
     at WEBPACK_CORE_LOADER_EXECUTION (node_modules/webpack-core/lib/NormalModuleMixin.js:155:71)
     at runSyncOrAsync (node_modules/webpack-core/lib/NormalModuleMixin.js:155:93)
     at nextLoader (node_modules/webpack-core/lib/NormalModuleMixin.js:290:3)
     at node_modules/webpack-core/lib/NormalModuleMixin.js:259:5
     at Storage.finished (node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:38:16)
     at node_modules/graceful-fs/graceful-fs.js:78:16
-    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:439:3)
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:445:3)
