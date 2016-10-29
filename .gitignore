@@ -8,3 +8,4 @@ npm-debug.log
 !/test/**/expectedOutput-*/**
 /node_modules
 !build.js
+dist
