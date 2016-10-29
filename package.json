@@ -2,7 +2,7 @@
   "name": "vue-ts-loader",
   "version": "0.0.4",
   "description": "TypeScript loader for vue-loader",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
