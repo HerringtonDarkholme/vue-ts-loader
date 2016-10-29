@@ -66,6 +66,7 @@ function loadConfig(testStagingPath, webpackOutput) {
     return config
 }
 
+var vueLoaderId = /id=data-v-[^!]+/g
 var savedOutputs = {}
 function createTest(test, testPath, options) {
 
@@ -81,6 +82,7 @@ function createTest(test, testPath, options) {
           .replace(new RegExp(regexEscape(testStagingPath+path.sep), 'g'), '')
           .replace(new RegExp(regexEscape(rootPath+path.sep), 'g'), '')
           .replace(new RegExp(regexEscape(rootPath), 'g'), '')
+          .replace(vueLoaderId, '')
           .replace(/\.transpile/g, '');
     }
 
