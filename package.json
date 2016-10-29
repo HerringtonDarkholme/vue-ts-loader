@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "npm link ./test/testLib && npm link ./test/@types/jquery && mocha --reporter spec test/run.js --max-old-space-size=4096 --production",
+    "test": "npm link ./test/testLib && npm link ./test/@types/jquery && NODE_ENV=production mocha --reporter spec test/run.js --max-old-space-size=4096",
     "baseline-accept": "npm link ./test/testLib && npm link ./test/@types/jquery && mocha --reporter spec test/run.js --max-old-space-size=4096 --save-output",
     "prepublish": "npm run build"
   },

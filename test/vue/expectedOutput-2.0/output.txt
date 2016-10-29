@@ -1,10 +1,10 @@
     Asset     Size  Chunks             Chunk Names
-bundle.js  5.84 kB       0  [emitted]  main
-chunk    {0} bundle.js (main) 4.25 kB [rendered]
-    [0] ./.test/vue/index.vue 1.57 kB {0} [built]
+bundle.js  3.89 kB       0  [emitted]  main
+chunk    {0} bundle.js (main) 2.36 kB [rendered]
+    [0] ./.test/vue/index.vue 778 bytes {0} [built]
     [1] ./dist!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/index.vue 355 bytes {0} [built]
-    [2] ./.test/vue/component.vue 1.58 kB {0} [built]
+    [2] ./.test/vue/component.vue 786 bytes {0} [built]
     [3] ./dist!./~/vue-loader/lib/selector.js?type=script&index=0!./.test/vue/component.vue 157 bytes {0} [built]
-    [4] ./~/vue-loader/lib/template-compiler.js?id=data-v-6043e8f4!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/component.vue 265 bytes {0} [built]
+    [4] ./~/vue-loader/lib/template-compiler.js?id=data-v-6043e8f4!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/component.vue 115 bytes {0} [built]
     [5] ./.test/vue/helper.ts 61 bytes {0} [built]
-    [6] ./~/vue-loader/lib/template-compiler.js?id=data-v-1e83055b!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/index.vue 260 bytes {0} [built]
+    [6] ./~/vue-loader/lib/template-compiler.js?id=data-v-1e83055b!./~/vue-loader/lib/selector.js?type=template&index=0!./.test/vue/index.vue 110 bytes {0} [built]
